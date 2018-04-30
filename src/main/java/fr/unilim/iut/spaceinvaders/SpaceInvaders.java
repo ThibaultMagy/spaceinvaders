@@ -17,7 +17,9 @@ public class SpaceInvaders {
 	
 	//METHODES
 	public void positionnerUnNouveauVaisseau(int x, int y) {
-		 this.vaisseau = new Vaisseau (x,y);
+		if(x>=longueur)
+			throw new HorsEspaceJeuException("Vous etes en dehors de l'espace de jeu");
+		this.vaisseau = new Vaisseau (x,y);
 	}
 	
 	//TOSTRING
@@ -25,7 +27,7 @@ public class SpaceInvaders {
 	public String toString() {
 		return recupererEspaceJeuDansChaineASCII();
 	}
-
+	
 	public String recupererEspaceJeuDansChaineASCII() {
 		StringBuilder espaceDeJeu = new StringBuilder();
 		for (int y = 0; y < hauteur; y++) {
