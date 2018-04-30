@@ -9,5 +9,15 @@ public class SpaceInvaders {
 		this.longueur = longueur;
 		this.hauteur = hauteur;
 	}
-
-}
+    @Override
+    public String toString() {
+        String	espaceDeJeu = "";
+        for (int i = 0; i < hauteur; i++) {
+            for (int j = 0; j < longueur; j++) {
+                espaceDeJeu += ".";
+            }
+            espaceDeJeu += "\n";
+        }
+        return espaceDeJeu;
+    }
+}	
