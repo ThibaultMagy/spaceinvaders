@@ -19,11 +19,16 @@ public class SpaceInvaders {
 	
 	//METHODES
 	public void positionnerUnNouveauVaisseau(int x, int y) {
-		if(x>=longueur)
-			throw new HorsEspaceJeuException("Vous etes en dehors de l'espace de jeu");
-		this.vaisseau = new Vaisseau (x,y);
-	}
+		
+		if ((x<0) || (x >= longueur))
+			throw new HorsEspaceJeuException("Vous êtes en dehors de l'espace jeu");
+		
+		if ((y<0) || (y >= hauteur))
+			throw new HorsEspaceJeuException("Vous êtes en dehors de l'espace jeu");
 	
+		vaisseau = new Vaisseau(x, y); 
+	}
+		
 	//TOSTRING
 	@Override
 	public String toString() {
