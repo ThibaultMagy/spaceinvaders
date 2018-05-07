@@ -17,6 +17,9 @@ public class SpaceInvaders {
 		this.hauteur = hauteur;
 	}
 	
+	
+	
+	
 	//METHODES
 	public void positionnerUnNouveauVaisseau(int x, int y) {
 		
@@ -26,16 +29,18 @@ public class SpaceInvaders {
 		vaisseau = new Vaisseau(x, y); 
 
 	}
-
 	private boolean estDansEspaceJeu(int x, int y) {
 		return ((x >= 0) && (x < longueur)) && ((y >= 0) && (y < hauteur));
 	}
-		
-	//TOSTRING
-	@Override
-	public String toString() {
-		return recupererEspaceJeuDansChaineASCII();
+	public void deplacerVaisseauVersLaDroite() {
+        if (vaisseau.abscisse()< (longueur-1)) vaisseau.seDeplacerVersLaDroite();
 	}
+	public void deplacerVaisseauVersLaGauche() {
+		if(vaisseau.abscisse()>0) vaisseau.seDeplacerVersLaGauche();
+	}
+		
+	
+	
 	
 	public String recupererEspaceJeuDansChaineASCII() {
 		StringBuilder espaceDeJeu = new StringBuilder();
@@ -56,6 +61,9 @@ public class SpaceInvaders {
 			marque=MARQUE_VIDE;
 		return marque;
 	}
+	
+	
+	
 	
 	//REFACTOR DEGRE 0
 	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
