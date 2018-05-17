@@ -6,9 +6,6 @@ import fr.unilim.iut.spaceinvaders.utils.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
 
 public class SpaceInvaders implements Jeu{
-	private static final char MARQUE_FIN_LIGNE = '\n';
-	private static final char MARQUE_VIDE = '.';
-	private static final char MARQUE_VAISSEAU = 'V';
 	//ATTRIBUTS
 	int longueur;
 	int hauteur;
@@ -65,38 +62,53 @@ public class SpaceInvaders implements Jeu{
 			for (int x = 0; x < longueur; x++) {
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
 			}
-			espaceDeJeu.append(MARQUE_FIN_LIGNE);
+			espaceDeJeu.append(Constante.MARQUE_FIN_LIGNE);
 		}
 		return espaceDeJeu.toString();
 	}
 	private char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
 		if (aUnVaisseauQuiOccupeLaPosition(x, y))
-			marque=MARQUE_VAISSEAU;
+			marque=Constante.MARQUE_VAISSEAU;
 		else
-			marque=MARQUE_VIDE;
+			marque=Constante.MARQUE_VIDE;
 		return marque;
 	}
 	@Override
-	public void evoluer(Commande commandeUser) {	
-	}
-	@Override
-	public boolean etreFini() {
-		return false;
-	}
+    public void evoluer(Commande commandeUser) {
+		if (commandeUser.gauche) {
+           deplacerVaisseauVersLaGauche();
+		}
+		if (commandeUser.droite) {
+			deplacerVaisseauVersLaDroite();
+		}
+   }
+   @Override
+   public boolean etreFini() {
+      return false; 
+   }
 	
+	
+   //----------------------------------------------------------INITIALISATION DU JEU-----------------------------------------------------------------------
+   public void initialiserJeu() {
+	    Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
+	    Position positionVaisseau = new Position(this.longueur/2 - Constante.VAISSEAU_LONGUEUR/2, this.hauteur-1);
+	    positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, 1);
+   }
 	
 	
 	//REFACTOR DEGRE 0
-	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
+	public boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
 		return this.aUnVaisseau() && aUnVaisseauQuiOccupe(x, y);
 	}
-	private boolean aUnVaisseauQuiOccupe(int x, int y) {
+	public boolean aUnVaisseauQuiOccupe(int x, int y) {
 		return vaisseau.occupeLaPosition(x, y);
 	}
 
-	private boolean aUnVaisseau() {
+	public boolean aUnVaisseau() {
 		return vaisseau!=null;
 	}
-
+	public Vaisseau getVaisseau() {
+		return this.vaisseau;
+	}
 }	
