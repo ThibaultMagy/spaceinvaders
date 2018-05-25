@@ -1,5 +1,6 @@
 package fr.unilim.iut.spaceinvaders.moteurjeu;
 
+import fr.unilim.iut.spaceinvaders.Constante;
 
 /**
  * classe MoteurGraphique represente un moteur de jeu generique.
@@ -55,7 +56,7 @@ public class MoteurGraphique {
 			// affiche le jeu
 			this.gui.dessiner();
 			// met en attente
-			Thread.sleep(100);
+			Thread.sleep(Constante.TIME_SLEEP);
 		}
 	}
 
