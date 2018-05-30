@@ -50,7 +50,7 @@ public class SpaceInvaders implements Jeu{
 	}
 	public void deplacerVaisseauVersLaDroite() {
 		if (vaisseau.abscisseLaPlusADroite() < (longueur - 1)) {
-			vaisseau.seDeplacerVersLaDroite();
+			vaisseau.deplacerHorizontalementVers(Direction.DROITE);;
 			if (!estDansEspaceJeu(vaisseau.abscisseLaPlusADroite(), vaisseau.ordonneeLaPlusHaute())) {
 				vaisseau.positionner(longueur - vaisseau.dimension.longueur(), vaisseau.ordonneeLaPlusHaute());
 			}
@@ -58,7 +58,7 @@ public class SpaceInvaders implements Jeu{
 	}
 	public void deplacerVaisseauVersLaGauche() {
 		if (0 < vaisseau.abscisseLaPlusAGauche())
-			vaisseau.seDeplacerVersLaGauche();
+			vaisseau.deplacerHorizontalementVers(Direction.GAUCHE);
 		if (!estDansEspaceJeu(vaisseau.abscisseLaPlusAGauche(), vaisseau.ordonneeLaPlusHaute())) {
 			vaisseau.positionner(0, vaisseau.ordonneeLaPlusHaute());
 		}
@@ -99,8 +99,15 @@ public class SpaceInvaders implements Jeu{
 		}
 		if (commandeUser.droite) {
 			deplacerVaisseauVersLaDroite();
-		if (commandeUser.tir && !this.aUnMissile())
+		}
+		if (commandeUser.tir && !this.aUnMissile()) {
 			tirerUnMissile(new Dimension(Constante.MISSILE_LONGUEUR, Constante.MISSILE_HAUTEUR), Constante.MISSILE_VITESSE);
+		}
+		if(aUnMissile()) {
+			missile.deplacerVerticalementVer(Direction.HAUT_ECRAN);
+			if(!estDansEspaceJeu(missile.abscisseLaPlusAGauche(), missile.ordonneeLaPlusBasse())) {
+				detruireMissile();
+			}
 		}
    }
    @Override
@@ -125,7 +132,6 @@ public class SpaceInvaders implements Jeu{
 	public boolean aUnVaisseauQuiOccupe(int x, int y) {
 		return vaisseau.occupeLaPosition(x, y);
 	}
-
 	public boolean aUnVaisseau() {
 		return vaisseau!=null;
 	}
@@ -134,5 +140,11 @@ public class SpaceInvaders implements Jeu{
 	}
 	public Missile getMissile() {
 		return this.missile;
+	}
+	public void detruireMissile() {
+		missile=null;
+	}
+	public void deplacerMissile() {
+		missile.deplacerVerticalementVer(Direction.HAUT_ECRAN);;
 	}
 }	
