@@ -63,12 +63,15 @@ public class Controleur implements KeyListener {
 		case KeyEvent.VK_LEFT:
 			this.commandeEnCours.gauche = true;
 			this.commandeARetourner.gauche = true;
+			break;
 		case KeyEvent.VK_RIGHT:
 			this.commandeEnCours.droite = true;
 			this.commandeARetourner.droite = true;
+			break;
 		case KeyEvent.VK_SPACE:
 			this.commandeEnCours.tir=true;
 			this.commandeARetourner.tir=true;
+			break;
 		}
 	}
 

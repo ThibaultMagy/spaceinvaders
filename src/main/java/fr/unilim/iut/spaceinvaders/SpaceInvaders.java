@@ -107,6 +107,7 @@ public class SpaceInvaders implements Jeu{
 		return missile!=null;
 	}
 
+	boolean droite=true;
 	@Override
     public void evoluer(Commande commandeUser) {
 		if (commandeUser.gauche) {
@@ -124,6 +125,18 @@ public class SpaceInvaders implements Jeu{
 				detruireMissile();
 			}
 		}
+		if(envahisseur.abscisseLaPlusAGauche() <= 1) {
+			droite=true;
+		}
+		else if(envahisseur.abscisseLaPlusAGauche() + envahisseur.dimension.longueur() >= this.longueur-1) {
+			droite=false;
+		}
+		if(droite) {
+			envahisseur.deplacerHorizontalementVers(Direction.DROITE);
+		}
+		else {
+			envahisseur.deplacerHorizontalementVers(Direction.GAUCHE);
+		}
    }
    @Override
    public boolean etreFini() {
@@ -134,9 +147,11 @@ public class SpaceInvaders implements Jeu{
    //----------------------------------------------------------INITIALISATION DU JEU-----------------------------------------------------------------------
    public void initialiserJeu() {
 	    Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
-	    //Le "this.longueur/2 - Constante.VAISSEAU_LONGUEUR/2" permet de placer le vaisseau de manière a ce qu'il se trouve vraiment au milieu (par rapport a son centre physique)
 	    Position positionVaisseau = new Position(this.longueur/2 - Constante.VAISSEAU_LONGUEUR/2, this.hauteur-1);
 	    positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, Constante.VAISSEAU_VITESSE);
+	    Dimension dimensionEnvahisseur = new Dimension(Constante.ENVAHISSEUR_LONGUEUR, Constante.ENVAHISSEUR_HAUTEUR);
+	    Position positionEnvahisseur = new Position(this.longueur/2 - Constante.ENVAHISSEUR_LONGUEUR/2, Constante.ENVAHISSEUR_HAUTEUR - 1);
+	    positionnerUnEnvahisseur(dimensionEnvahisseur, positionEnvahisseur, Constante.ENVAHISSEUR_VITESSE);
    }
 	
 	
@@ -149,6 +164,9 @@ public class SpaceInvaders implements Jeu{
 	}
 	public boolean aUnVaisseau() {
 		return vaisseau!=null;
+	}
+	public boolean aUnEnvahisseur() {
+		return envahisseur!=null;
 	}
 	public Vaisseau getVaisseau() {
 		return this.vaisseau;

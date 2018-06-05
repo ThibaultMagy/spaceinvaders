@@ -31,5 +31,5 @@ public class Constante {
     
     public static final int ENVAHISSEUR_LONGUEUR = 40;
     public static final int ENVAHISSEUR_HAUTEUR = 40;
-    public static final int ENVAHISSEUR_VITESSE = 10;
+    public static final int ENVAHISSEUR_VITESSE = 2;
 }
