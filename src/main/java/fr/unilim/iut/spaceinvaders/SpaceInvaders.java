@@ -2,7 +2,6 @@ package fr.unilim.iut.spaceinvaders;
 
 import fr.unilim.iut.spaceinvaders.moteurjeu.Commande;
 import fr.unilim.iut.spaceinvaders.moteurjeu.Jeu;
-import fr.unilim.iut.spaceinvaders.utils.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.utils.HorsEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.utils.MissileException;
 
@@ -13,11 +12,13 @@ public class SpaceInvaders implements Jeu{
 	Vaisseau vaisseau;
 	Missile missile;
 	Envahisseur envahisseur;
+	Collision collision;
 
 	//CONSTRUCTEUR
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
 		this.hauteur = hauteur;
+		this.collision = new Collision();
 	}
 	
 	
@@ -121,21 +122,28 @@ public class SpaceInvaders implements Jeu{
 		}
 		if(aUnMissile()) {
 			missile.deplacerVerticalementVer(Direction.HAUT_ECRAN);
-			if(!estDansEspaceJeu(missile.abscisseLaPlusAGauche(), missile.ordonneeLaPlusBasse())) {
+			if(aUnEnvahisseur() && collision.detecterCollision(missile, envahisseur)) {
+				detruireEnvahisseur();
+				detruireMissile();
+			}
+			else if(!estDansEspaceJeu(missile.abscisseLaPlusAGauche(), missile.ordonneeLaPlusBasse())) {
 				detruireMissile();
 			}
 		}
-		if(envahisseur.abscisseLaPlusAGauche() <= 1) {
-			droite=true;
-		}
-		else if(envahisseur.abscisseLaPlusAGauche() + envahisseur.dimension.longueur() >= this.longueur-1) {
-			droite=false;
-		}
-		if(droite) {
-			envahisseur.deplacerHorizontalementVers(Direction.DROITE);
-		}
-		else {
-			envahisseur.deplacerHorizontalementVers(Direction.GAUCHE);
+		if(aUnEnvahisseur()) {
+			
+			if(envahisseur.abscisseLaPlusAGauche() <= 1) {
+				droite=true;
+			}
+			else if(envahisseur.abscisseLaPlusAGauche() + envahisseur.dimension.longueur() >= this.longueur-1) {
+				droite=false;
+			}
+			if(droite) {
+				envahisseur.deplacerHorizontalementVers(Direction.DROITE);
+			}
+			else {
+				envahisseur.deplacerHorizontalementVers(Direction.GAUCHE);
+			}
 		}
    }
    @Override
@@ -179,5 +187,8 @@ public class SpaceInvaders implements Jeu{
 	}
 	public void deplacerMissile() {
 		missile.deplacerVerticalementVer(Direction.HAUT_ECRAN);;
+	}
+	public void detruireEnvahisseur() {
+		envahisseur = null;
 	}
 }	

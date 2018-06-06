@@ -29,7 +29,7 @@ public abstract class Sprite {
 	}
 
 	public int ordonneeLaPlusBasse() {
-		return ordonneeLaPlusHaute()-this.dimension.hauteur()+1;
+		return this.origine.ordonnee()-this.dimension.hauteur()+1;
 	}
 
 	public boolean estAbscisseCouverte(int x) {
