@@ -33,4 +33,7 @@ public class Vaisseau extends Sprite {
 	public int recupererAbscisseMilieuVaisseau() {
 		return this.abscisseLaPlusAGauche() + (this.dimension.longueur() / 2);
 	}
+	public void arreter() {
+		this.vitesse = 0;
+	}
 }

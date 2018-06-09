@@ -1,10 +1,10 @@
 package fr.unilim.iut.spaceinvaders;
 
 public class Collision {
-	
+	//
 	public boolean detecterCollision(Sprite missile, Sprite envahisseur) {
 		boolean b = false;
-		if(corellationDesAbscisses(missile, envahisseur) && missile.ordonneeLaPlusHaute()>=envahisseur.ordonneeLaPlusBasse()) {
+		if(corellationDesAbscisses(missile, envahisseur) && (missile.ordonneeLaPlusHaute() >= envahisseur.ordonneeLaPlusBasse())) {
 			b = true;
 		}
 		return b;
